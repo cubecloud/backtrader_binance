@@ -9,7 +9,11 @@
 # If you liked this software => Put a star on github - https://github.com/WISEPLAT/backtrader_binance
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+from datawizard.secure import Secure
+
+secure_key = Secure()
+_binance_api_key, _binance_api_secret = secure_key.get_key()
 
 class Config:
-    BINANCE_API_KEY = "YOUR_API_KEY"
-    BINANCE_API_SECRET = "YOUR_SECRET_KEY"
+    BINANCE_API_KEY = _binance_api_key
+    BINANCE_API_SECRET = _binance_api_secret
