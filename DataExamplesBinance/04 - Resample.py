@@ -37,7 +37,7 @@ if __name__ == '__main__':  # Entry point when running this script
 
     # Historical M15, H1 are obtained by Resample + H1 for control + Chart because offline/ timeframe M15 + resample H1 + H1
     from_date = dt.datetime.utcnow().date().today()
-    data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=15, dataname=symbol, start_date=from_date, LiveBars=False)  # Historical data for the smallest time interval
+    data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=1, dataname=symbol, start_date=from_date, LiveBars=False)  # Historical data for the smallest time interval
     cerebro.adddata(data)  # Adding data
     cerebro.resampledata(data, timeframe=bt.TimeFrame.Minutes, compression=60, name="resampled",)  # You can add a larger time interval multiple of a smaller one (added automatically)
     # cerebro.resampledata(data, timeframe=bt.TimeFrame.Minutes, compression=60, name="resampled", boundoff=1).plotinfo.plot = False  # without output on the chart

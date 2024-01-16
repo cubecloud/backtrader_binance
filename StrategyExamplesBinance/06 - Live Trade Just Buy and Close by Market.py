@@ -80,7 +80,7 @@ class RSIStrategy(bt.Strategy):
 
                     if not self.buy_once[ticker]:  # Enter long
                         size = 0.0007  # min value to buy for BTC and ETH
-                        if data._name == "ETHUSDT": size = 0.007
+                        if data._name == "ETHUSDT": size = 0.007*0.01
                         price = self.broker._store.format_price(ticker, data.close[0] * 1)  # buy at close price
                         print(f" - buy {ticker} size = {size} at price = {price}")
                         self.orders[data._name] = self.buy(data=data, exectype=bt.Order.Limit, price=price, size=size)
@@ -127,7 +127,7 @@ if __name__ == '__main__':
     cerebro = bt.Cerebro(quicknotify=True)
 
     coin_target = 'USDT'  # the base ticker in which calculations will be performed
-    symbol = 'ETH' + coin_target  # the ticker by which we will receive data in the format <CodeTickerBaseTicker>
+    symbol = 'BTC' + coin_target  # the ticker by which we will receive data in the format <CodeTickerBaseTicker>
 
     store = BinanceStore(
         api_key=Config.BINANCE_API_KEY,
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     cerebro.setbroker(broker)
 
     # Historical 1-minute bars for the last hour + new live bars / timeframe M1
-    from_date = dt.datetime.utcnow() - dt.timedelta(minutes=60)
+    from_date = dt.datetime.utcnow() - dt.timedelta(minutes=6 * 60)
     data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=1, dataname=symbol, start_date=from_date, LiveBars=True)
 
     cerebro.adddata(data)  # Adding data

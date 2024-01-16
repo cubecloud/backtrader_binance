@@ -21,16 +21,16 @@ if __name__ == '__main__':  # Entry point when running this script
     broker = store.getbroker()
     cerebro.setbroker(broker)
 
-    # 1. Historical 5-minute bars + 15-minute bars for the last 10 hours + Chart because offline/ timeframe M5 + M15
-    from_date = dt.datetime.utcnow() - dt.timedelta(minutes=10*60)  # we take data for the last 10 hours
-    data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=5, dataname=symbol, start_date=from_date, LiveBars=False)  # Historical data for a small time interval (should go first)
-    cerebro.adddata(data)  # Adding data
-    data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=15, dataname=symbol, start_date=from_date, LiveBars=False)  # Historical data for a large time interval
-
-    # # 2. Historical 1-minute + 5-minute bars for the last hour + new live bars / timeframe M1 + M5
-    # from_date = dt.datetime.utcnow() - dt.timedelta(minutes=60)  # we take data for the last 1 hour
-    # data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=1, dataname=symbol, start_date=from_date, LiveBars=True)  # Historical data for a small time interval (should go first)
+    # # 1. Historical 5-minute bars + 15-minute bars for the last 10 hours + Chart because offline/ timeframe M5 + M15
+    # from_date = dt.datetime.utcnow() - dt.timedelta(minutes=10*60)  # we take data for the last 10 hours
+    # data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=5, dataname=symbol, start_date=from_date, LiveBars=False)  # Historical data for a small time interval (should go first)
     # cerebro.adddata(data)  # Adding data
+    # data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=15, dataname=symbol, start_date=from_date, LiveBars=False)  # Historical data for a large time interval
+
+    # 2. Historical 1-minute + 5-minute bars for the last hour + new live bars / timeframe M1 + M5
+    from_date = dt.datetime.utcnow() - dt.timedelta(minutes=12*60)  # we take data for the last 12 hours
+    data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=1, dataname=symbol, start_date=from_date, LiveBars=True)  # Historical data for a small time interval (should go first)
+    cerebro.adddata(data)  # Adding data
     # data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=5, dataname=symbol, start_date=from_date, LiveBars=True)  # Historical data for a large time interval
 
     # # 3. Historical 1-hour bars + 4-hour bars for the week + Chart because offline/ timeframe H1 + H4
@@ -39,7 +39,7 @@ if __name__ == '__main__':  # Entry point when running this script
     # cerebro.adddata(data)  # Adding data
     # data = store.getdata(timeframe=bt.TimeFrame.Minutes, compression=240, dataname=symbol, start_date=from_date, LiveBars=False)  # Historical data for a large time interval
 
-    cerebro.adddata(data)  # Adding data
+    # cerebro.adddata(data)  # Adding data
     cerebro.addstrategy(StrategyJustPrintsOHLCVAndState, coin_target=coin_target)  # Adding a trading system
 
     cerebro.run()  # Launching a trading system
