@@ -10,7 +10,7 @@ from backtrader import TimeFrame as tf
 
 class BinanceData(DataBase):
     params = (
-        ('drop_newest', True),
+        ('drop_newest', False),
     )
     
     # States for the Finite State Machine in _load
